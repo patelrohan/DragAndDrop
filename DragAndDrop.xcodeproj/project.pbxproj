@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1CC33E3A2A7C637C0057A781 /* Algorithms in Frameworks */ = {isa = PBXBuildFile; productRef = 1CC33E392A7C637C0057A781 /* Algorithms */; };
 		1CEFD5512A7C31AA00DDFE91 /* DragAndDropApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CEFD5502A7C31AA00DDFE91 /* DragAndDropApp.swift */; };
 		1CEFD5532A7C31AA00DDFE91 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CEFD5522A7C31AA00DDFE91 /* ContentView.swift */; };
 		1CEFD5552A7C31AB00DDFE91 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1CEFD5542A7C31AB00DDFE91 /* Assets.xcassets */; };
@@ -26,6 +27,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1CC33E3A2A7C637C0057A781 /* Algorithms in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -83,6 +85,9 @@
 			dependencies = (
 			);
 			name = DragAndDrop;
+			packageProductDependencies = (
+				1CC33E392A7C637C0057A781 /* Algorithms */,
+			);
 			productName = DragAndDrop;
 			productReference = 1CEFD54D2A7C31AA00DDFE91 /* DragAndDrop.app */;
 			productType = "com.apple.product-type.application";
@@ -111,6 +116,9 @@
 				Base,
 			);
 			mainGroup = 1CEFD5442A7C31AA00DDFE91;
+			packageReferences = (
+				1CC33E382A7C637C0057A781 /* XCRemoteSwiftPackageReference "swift-algorithms" */,
+			);
 			productRefGroup = 1CEFD54E2A7C31AA00DDFE91 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -272,8 +280,7 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -300,8 +307,7 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -337,6 +343,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		1CC33E382A7C637C0057A781 /* XCRemoteSwiftPackageReference "swift-algorithms" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/apple/swift-algorithms.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		1CC33E392A7C637C0057A781 /* Algorithms */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1CC33E382A7C637C0057A781 /* XCRemoteSwiftPackageReference "swift-algorithms" */;
+			productName = Algorithms;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 1CEFD5452A7C31AA00DDFE91 /* Project object */;
 }
