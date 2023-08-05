@@ -7,12 +7,13 @@
 
 import SwiftUI
 import Algorithms
+import UniformTypeIdentifiers
 
 struct ContentView: View {
     
-    @State private var toDoTasks: [String] = ["Make Dinner","Leetcode Problem","Meditation"]
-    @State private var inProgressTasks: [String] = ["SwiftUI Tutorial"]
-    @State private var doneTasks: [String] = []
+    @State private var toDoTasks: [DeveloperTask] = [MockData.taskTwo, MockData.taskThree, MockData.taskFour]
+    @State private var inProgressTasks: [DeveloperTask] = [MockData.taskOne]
+    @State private var doneTasks: [DeveloperTask] = []
    
     @State private var isToDoTargeted = false
     @State private var isInProgressTargeted = false
@@ -22,15 +23,14 @@ struct ContentView: View {
         // Display 3 columns of Kanban views
         HStack(spacing: 12){
             KanbanView(title: "To Do", tasks: toDoTasks, isTargeted: isToDoTargeted)
-                .dropDestination(for:String.self) { droppedTasks, location in
+                .dropDestination(for:DeveloperTask.self) { droppedTasks, location in
                     //code for successfull drop
                     for task in droppedTasks{
-                        inProgressTasks.removeAll{ $0 == task }
-                        doneTasks.removeAll{ $0 == task }
+                        inProgressTasks.removeAll{ $0.id == task.id }
+                        doneTasks.removeAll{ $0.id == task.id }
                     }
                     
                     toDoTasks += droppedTasks
-                    //prevent duplication of dropped tasks using uniques() method from Algorithms package. Can use Set instead of array as well
                     toDoTasks = Array(toDoTasks.uniqued())
                     
                     return true
@@ -40,15 +40,16 @@ struct ContentView: View {
                 }
             
             KanbanView(title: "In Progress", tasks: inProgressTasks, isTargeted: isInProgressTargeted)
-                .dropDestination(for:String.self) { droppedTasks, location in
+                .dropDestination(for:DeveloperTask.self) { droppedTasks, location in
                     //code for successfull drop
                     for task in droppedTasks{
-                        toDoTasks.removeAll{ $0 == task }
-                        doneTasks.removeAll{ $0 == task }
+                        toDoTasks.removeAll{ $0.id == task.id }
+                        doneTasks.removeAll{ $0.id == task.id }
                     }
                     
                     inProgressTasks += droppedTasks
-                    //prevent duplication of dropped tasks using uniques() method from Algorithms package. Can use Set instead of array as well
+                    //prevent duplication of dropped tasks using uniques() method from Algorithms package.
+                    //Can use Set instead of array as well
                     inProgressTasks = Array(inProgressTasks.uniqued())
                     
                     return true
@@ -59,15 +60,14 @@ struct ContentView: View {
             
             
             KanbanView(title: "Done", tasks: doneTasks, isTargeted: isDoneTargeted)
-                .dropDestination(for:String.self) { droppedTasks, location in
+                .dropDestination(for:DeveloperTask.self) { droppedTasks, location in
                     //code for successfull drop
                     for task in droppedTasks{
-                        toDoTasks.removeAll{ $0 == task }
-                        inProgressTasks.removeAll{ $0 == task }
+                        toDoTasks.removeAll{ $0.id == task.id }
+                        inProgressTasks.removeAll{ $0.id == task.id }
                     }
                     
                     doneTasks += droppedTasks
-                    //prevent duplication of dropped tasks using uniques() method from Algorithms package. Can use Set instead of array as well
                     doneTasks = Array(doneTasks.uniqued())
                     
                     return true
@@ -92,12 +92,14 @@ struct ContentView_Previews: PreviewProvider {
 struct KanbanView: View{
     
     let title: String
-    let tasks: [String]
+    let tasks: [DeveloperTask]
     let isTargeted: Bool
     
     var body: some View{
-        VStack(alignment: .leading){
-            Text(title).font(.footnote.bold())
+        VStack(alignment: .center){
+            Text(title)
+                .font(.footnote.bold())
+                
             
             ZStack{
                 RoundedRectangle(cornerRadius: 12)
@@ -105,8 +107,8 @@ struct KanbanView: View{
                     .foregroundColor(isTargeted ? .teal.opacity(0.2) : Color(.secondarySystemFill))
                 
                 VStack(alignment: .leading, spacing: 12){
-                    ForEach(tasks, id: \.self){ task in
-                        Text(task)
+                    ForEach(tasks, id: \.id){ task in
+                        Text(task.title)
                             .padding(12)
                             .background(Color(uiColor: .secondarySystemGroupedBackground))
                             .cornerRadius(8)
@@ -119,4 +121,31 @@ struct KanbanView: View{
             }
         }
     }
+}
+struct DeveloperTask: Transferable, Codable, Hashable{
+    let id: UUID
+    let title: String
+    let owner: String
+    let note: String
+    
+    static var transferRepresentation: some TransferRepresentation{
+        CodableRepresentation(contentType: .developerTask)
+    }
+}
+
+extension UTType{
+    static let developerTask = UTType(exportedAs: "rohan-patel.DragAndDrop")
+}
+
+struct MockData{
+    static let taskOne = DeveloperTask(id: UUID(), title: "SwiftUI Tutorial", owner: "Rohan", note: "Weekend project")
+    
+    
+    static let taskTwo = DeveloperTask(id: UUID(), title: "Cleanup and Organize Home", owner: "Family", note: "Weekend task for everyone")
+    
+    
+    static let taskThree = DeveloperTask(id: UUID(), title: "Leetcode Problem", owner: "Rohan", note: "1 Leetcode a day keeps unemployment away!")
+    
+    
+    static let taskFour = DeveloperTask(id: UUID(), title: "Family Meditation", owner: "Rohan", note: "Daily task of mindfulness")
 }
